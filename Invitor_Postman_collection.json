@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "invitor-collection-id-2026",
+		"name": "Invitor API Collection",
+		"description": "Postman collection to test the Invitor backend API endpoints including Authentication, OTP Verification, and Invite management.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "User Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Goutam Gupta\",\n    \"email\": \"your_email@gmail.com\",\n    \"password\": \"Goutam@935\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Registers a new user and triggers an OTP email."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"your_email@gmail.com\",\n    \"otp\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/verify-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"verify-otp"
+							]
+						},
+						"description": "Verifies the 6-digit account activation OTP received via email."
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"your_email@gmail.com\",\n    \"password\": \"Goutam@935\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Logs in the verified user and returns a signed JWT token."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invites",
+			"item": [
+				{
+					"name": "Get All Invites",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/invites",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"invites"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "Party",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Fetches all invites from the database. Can optionally filter by category or ticketPrice."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Invite By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/invites/REPLACE_WITH_INVITE_ID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"invites",
+								"REPLACE_WITH_INVITE_ID"
+							]
+						},
+						"description": "Fetches a specific invitation layout using its MongoDB object reference ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Invite (Admin Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "PASTE_YOUR_JWT_TOKEN_HERE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Grand Launch Party\",\n    \"description\": \"Exclusive entry to the backend deployment launch.\",\n    \"date\": \"2026-06-01\",\n    \"location\": \"Kolkata\",\n    \"category\": \"Party\",\n    \"totalSeats\": 100,\n    \"ticketPrice\": 500,\n    \"imageUrl\": \"https://example.com/image.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/invites",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"invites"
+							]
+						},
+						"description": "Creates a brand new invitation entry. Requires a valid Admin JWT bearer token passed in the Authorization header."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
